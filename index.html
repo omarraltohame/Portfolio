@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ============================================================
+     CUSTOMIZE ME: replace the name, role, projects, links, email.
+     Search for the word EDIT to find every spot quickly.
+     ============================================================ -->
+<title>Omar Altohame — Product & UX Designer</title>
+<meta name="description" content="Omar Altohame is a product and UX designer making complex products simple, in English and Arabic." />
+<!-- EDIT: change omaraltohame.com below if your live domain is different, and add a 1200x630 og-image.jpg -->
+<link rel="canonical" href="https://omaraltohame.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Omar Altohame — Product & UX Designer" />
+<meta property="og:description" content="Turning complex, high-stakes flows into interfaces people understand on the first try." />
+<meta property="og:url" content="https://omaraltohame.com/" />
+<meta property="og:image" content="https://omaraltohame.com/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Omar Altohame — Product & UX Designer" />
+<meta name="twitter:description" content="Turning complex, high-stakes flows into interfaces people understand on the first try." />
+<meta name="twitter:image" content="https://omaraltohame.com/og-image.jpg" />
+<!-- EDIT: favicon. Inline SVG below works out of the box; swap for your own. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237c2b27'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='white' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- set theme before paint to avoid a flash of the wrong mode -->
+<script>
+(function(){
+  try{
+    var saved=localStorage.getItem('theme');
+    var prefersDark=matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (prefersDark?'dark':'light'));
+  }catch(e){}
+})();
+</script>
+<style>
+/* ============================== TOKENS ============================== */
+:root{
+  --paper:#f4efe6;
+  --paper-2:#ece5d8;
+  --ink:#1c1815;
+  --ink-soft:#4a443c;
+  --ink-faint:#463f31;
+  --line:#d8cfbf;
+  --accent:#7c2b27;
+  --accent-deep:#5e201b;
+  --card:#fbf8f2;
+  --shadow:rgba(28,24,21,.12);
+  --grain:.045;
+  --nav-bg:rgba(244,239,230,.92);
+}
+[data-theme="dark"]{
+  --paper:#16140f;
+  --paper-2:#1f1c16;
+  --ink:#f1ece2;
+  --ink-soft:#c3bcae;
+  --ink-faint:#cdc3ab;
+  --line:#332e25;
+  --accent:#c75646;
+  --accent-deep:#d96f5f;
+  --card:#1d1a14;
+  --shadow:rgba(0,0,0,.5);
+  --grain:.07;
+  --nav-bg:rgba(22,20,15,.92);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Hanken Grotesk',sans-serif;
+  font-weight:400;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .6s ease,color .6s ease;
+}
+
+/* grain overlay (static PNG tile, no live filter) */
+body::after{
+  content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;
+  opacity:var(--grain);
+  background-image:url("assets/grain-texture.png");
+  background-size:96px 96px;
+}
+
+::selection{background:var(--accent);color:#fff}
+
+/* skip to content link */
+.skip-link{
+  position:absolute;left:16px;top:-60px;z-index:10000;
+  background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;
+  font-weight:600;text-decoration:none;transition:top .25s ease;
+}
+.skip-link:focus{top:16px}
+
+/* respect reduced motion preferences */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  .hero h1 .line > span{transform:none!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .hero-foot{opacity:1!important;transform:none!important}
+}
+
+/* ============================== LAYOUT ============================== */
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 22px}}
+section{position:relative}
+
+.eyebrow{
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;display:inline-flex;align-items:center;gap:.7em;
+}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--accent)}
+
+/* ============================== NAV ============================== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:var(--nav-bg);
+  border-bottom:1px solid transparent;transition:border-color .4s,padding .4s;
+}
+nav.scrolled{border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--ink-soft);font-size:.92rem;font-weight:500;position:relative;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1.5px;background:var(--accent);transition:width .35s ease}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:22px}
+.theme-toggle{
+  width:54px;height:28px;border-radius:20px;border:1px solid var(--line);
+  background:var(--paper-2);position:relative;cursor:pointer;transition:background .4s;
+}
+.theme-toggle::before{
+  content:"";position:absolute;top:2.5px;left:2.5px;width:21px;height:21px;border-radius:50%;
+  background:var(--accent);transition:transform .4s cubic-bezier(.7,0,.2,1);
+}
+[data-theme="dark"] .theme-toggle::before{transform:translateX(26px)}
+.menu-btn{display:none}
+@media(max-width:760px){
+  .nav-links{
+    position:absolute;top:74px;left:0;right:0;
+    flex-direction:column;align-items:flex-start;gap:0;
+    background:var(--nav-bg);
+    border-bottom:1px solid var(--line);padding:0 32px;
+    max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;
+  }
+  .nav-links.open{max-height:60vh;padding:14px 32px 24px}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:14px 0;font-size:1.05rem;border-bottom:1px solid var(--line)}
+  .nav-links li:last-child a{border-bottom:none}
+  .menu-btn{display:block;background:none;border:none;color:var(--ink);font-size:.9rem;font-weight:600;cursor:pointer}
+}
+
+/* ============================== HERO ============================== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:110px;padding-bottom:60px}
+.avail{display:inline-flex;align-items:center;gap:.6em;font-size:.82rem;color:var(--ink-soft);font-weight:500;margin-bottom:34px}
+.avail .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(124,43,39,.5)}70%{box-shadow:0 0 0 10px rgba(124,43,39,0)}100%{box-shadow:0 0 0 0 rgba(124,43,39,0)}}
+.hero h1{
+  font-family:'Fraunces',serif;font-weight:400;line-height:.92;letter-spacing:-.02em;
+  font-size:clamp(3.4rem,11.5vw,11rem);
+}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line > span{display:block;transform:translateY(105%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+.loaded .hero h1 .line > span{transform:translateY(0)}
+.loaded .hero h1 .line:nth-child(2) > span{transition-delay:.09s}
+.loaded .hero h1 .line:nth-child(3) > span{transition-delay:.18s}
+.hero-foot{
+  display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:54px;flex-wrap:wrap;
+  opacity:0;transform:translateY(20px);transition:all 1s ease .6s;
+}
+.loaded .hero-foot{opacity:1;transform:none}
+.hero-foot p{max-width:430px;font-size:1.12rem;color:var(--ink-soft)}
+.hero-foot p strong{color:var(--ink);font-weight:600}
+.scroll-cue{display:flex;align-items:center;gap:.7em;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
+.scroll-cue .arrow{width:1px;height:42px;background:var(--ink-faint);position:relative;overflow:hidden}
+.scroll-cue .arrow::after{content:"";position:absolute;inset:0;background:var(--accent);transform:translateY(-100%);animation:drop 2s infinite}
+@keyframes drop{0%{transform:translateY(-100%)}50%{transform:translateY(0)}100%{transform:translateY(100%)}}
+
+/* ============================== MARQUEE ============================== */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;overflow:hidden;white-space:nowrap;background:var(--paper-2)}
+.marquee-track{display:inline-flex;gap:0;animation:scroll 32s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{font-family:'Fraunces',serif;font-size:1.5rem;font-style:italic;padding:0 38px;color:var(--ink-soft)}
+.marquee-track span::after{content:"✺";color:var(--accent);margin-left:38px;font-style:normal;font-size:1rem;vertical-align:middle}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ============================== SECTIONS ============================== */
+.section-pad{padding:130px 0}
+@media(max-width:640px){.section-pad{padding:88px 0}}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:70px;flex-wrap:wrap}
+.section-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1;letter-spacing:-.02em}
+.section-head .count{font-family:'Fraunces',serif;font-size:1rem;color:var(--ink-faint)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============================== WORK ============================== */
+.work-list{display:flex;flex-direction:column;gap:90px}
+.case{
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+}
+.case:nth-child(even){direction:rtl}
+.case:nth-child(even) > *{direction:ltr}
+.case-visual{
+  position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 30px 60px -30px var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+}
+.case-visual .mock{position:absolute;inset:0;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.case:hover .case-visual .mock{transform:scale(1.04)}
+.tag-num{position:absolute;top:18px;left:20px;font-family:'Fraunces',serif;font-size:.9rem;color:#fff;mix-blend-mode:difference;z-index:2}
+.case-body .field{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+.case-body h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,3.2vw,2.6rem);line-height:1.04;letter-spacing:-.015em;margin-bottom:18px}
+.case-body .problem{color:var(--ink-soft);font-size:1.05rem;margin-bottom:26px;max-width:48ch}
+.metrics{display:flex;gap:34px;margin-bottom:28px;flex-wrap:wrap}
+.metric .n{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;color:var(--ink);line-height:1}
+.metric .l{font-size:.78rem;color:var(--ink-faint);letter-spacing:.04em;margin-top:6px}
+.case-link{display:inline-flex;align-items:center;gap:.6em;font-weight:600;color:var(--ink);text-decoration:none;font-size:.95rem;border-bottom:1.5px solid var(--accent);padding-bottom:3px;transition:gap .3s}
+.case-link:hover{gap:1.1em}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{font-size:.74rem;color:var(--ink-faint);border:1px solid var(--line);border-radius:30px;padding:5px 13px}
+@media(max-width:860px){
+  .case,.case:nth-child(even){grid-template-columns:1fr;direction:ltr;gap:28px}
+}
+
+/* mock gradients (placeholder visuals) */
+.m1{background:linear-gradient(135deg,#c75646,#7c2b27 55%,#7a2310)}
+.m2{background:linear-gradient(135deg,#2b3a67,#16213e 60%,#0b1020)}
+.m3{background:linear-gradient(135deg,#1f8a70,#0d5c46 60%,#06281f)}
+.m4{background:linear-gradient(135deg,#caa46a,#8a6a2f 60%,#3f2f12)}
+.mock-ui{position:absolute;inset:14%;border-radius:12px;background:rgba(255,255,255,.92);box-shadow:0 20px 40px rgba(0,0,0,.25);overflow:hidden}
+.mock-ui .bar{height:11px;border-radius:6px;background:#e9e3d8;margin:14px 16px}
+.mock-ui .bar.s{width:46%}
+.mock-ui .bar.a{background:var(--accent);width:30%}
+.mock-ui .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 16px}
+.mock-ui .grid div{height:42px;border-radius:7px;background:#f0ebe1}
+.mock-ui .topbar{height:30px;background:#1c1815;display:flex;align-items:center;gap:5px;padding:0 12px}
+.mock-ui .topbar i{width:8px;height:8px;border-radius:50%;background:#5a5046;display:block}
+
+/* ============================== ABOUT ============================== */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;align-items:center}
+.about-text h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.06;letter-spacing:-.02em;margin-bottom:28px}
+.about-text h2 em{font-style:italic;color:var(--accent)}
+.about-text p{color:var(--ink-soft);font-size:1.08rem;margin-bottom:18px;max-width:54ch}
+.portrait{aspect-ratio:1/1;border-radius:18px;border:1px solid var(--line);background:linear-gradient(160deg,var(--paper-2),var(--card));display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative;box-shadow:0 30px 60px -30px var(--shadow)}
+.portrait .ph{font-family:'Fraunces',serif;font-style:italic;color:var(--ink-faint);font-size:1rem;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.portrait .glyph{font-family:'Fraunces',serif;font-size:14rem;line-height:1;color:var(--accent);opacity:.16;margin-bottom:-20px}
+.facts{display:flex;gap:40px;margin-top:34px;flex-wrap:wrap}
+.fact .n{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:600;line-height:1}
+.fact .l{font-size:.82rem;color:var(--ink-faint);margin-top:4px}
+@media(max-width:860px){.about{grid-template-columns:1fr;gap:44px}.portrait{max-width:340px}}
+
+/* ============================== PROCESS ============================== */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.step{border-top:2px solid var(--ink);padding-top:22px;position:relative}
+.step .no{font-family:'Fraunces',serif;font-size:.85rem;color:var(--accent);font-weight:600;margin-bottom:40px;display:block}
+.step h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.35rem;margin-bottom:12px;letter-spacing:-.01em}
+.step p{color:var(--ink-soft);font-size:.96rem}
+@media(max-width:860px){.process-grid{grid-template-columns:1fr 1fr;gap:32px 24px}}
+@media(max-width:520px){.process-grid{grid-template-columns:1fr}}
+
+/* ============================== CLIENTS ============================== */
+.clients{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:46px 0}
+.clients-row{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.clients-row .c{font-family:'Fraunces',serif;font-weight:600;font-size:1.4rem;color:var(--ink-faint);opacity:.7;transition:opacity .3s,color .3s}
+.clients-row .c:hover{opacity:1;color:var(--ink)}
+
+/* ============================== CONTACT ============================== */
+.contact{text-align:center;padding:150px 0}
+.contact .eyebrow{justify-content:center;margin-bottom:34px}
+.contact h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.6rem,8vw,6.4rem);line-height:.98;letter-spacing:-.025em;margin-bottom:38px}
+.contact h2 a{color:var(--ink);text-decoration:none;border-bottom:3px solid var(--accent);transition:color .3s}
+.contact h2 a:hover{color:var(--accent)}
+.socials{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.socials a{color:var(--ink-soft);text-decoration:none;font-weight:500;position:relative;transition:color .3s}
+.socials a:hover{color:var(--accent)}
+
+/* ============================== FOOTER ============================== */
+footer{border-top:1px solid var(--line);padding:40px 0}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--ink-faint);font-size:.86rem}
+.to-top{cursor:pointer;color:var(--ink-soft);text-decoration:none;font-weight:500;display:inline-flex;align-items:center;gap:.5em}
+.to-top:hover{color:var(--accent)}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.case.is-clickable{position:relative;cursor:pointer}
+.case.is-clickable .case-link::after{content:"";position:absolute;inset:0;z-index:1}
+.hero-foot-left{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
+.btn-primary{display:inline-flex;align-items:center;gap:.5em;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:30px;transition:gap .3s,background .3s}
+.btn-primary:hover{background:var(--accent-deep);gap:.9em}
+.nav-links a.active{color:var(--ink)}
+.nav-links a.active::after{width:100%}
+</style>
+<noscript><style>
+  .reveal{opacity:1!important;transform:none!important}
+  .hero h1 .line > span{transform:none!important}
+  .hero-foot{opacity:1!important;transform:none!important}
+</style></noscript>
+<!-- EDIT: update name, url, job title, and social links to match yours -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Omar Altohame",
+  "url":"https://omaraltohame.com/",
+  "image":"https://omaraltohame.com/og-image.jpg",
+  "jobTitle":"Product & UX Designer",
+  "description":"Product and UX designer making complex products simple, in English and Arabic.",
+  "address":{"@type":"PostalAddress","addressLocality":"Cairo","addressCountry":"EG"},
+  "sameAs":[
+    "https://www.behance.net/omaraltohame",
+    "https://www.linkedin.com/in/omarraltohame/"
+  ]
+}
+</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ===================== NAV ===================== -->
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <!-- EDIT: your name / initials -->
+    <a href="#top" class="logo">Omar<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false"></button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<main id="main">
+<header class="hero wrap" id="top">
+  <span class="avail"><span class="dot"></span> Available for select projects — Summer 2026</span>
+  <!-- EDIT: your name across the three lines -->
+  <h1>
+    <span class="line"><span>Omar</span></span>
+    <span class="line"><span><em>Altohame</em></span></span>
+    <span class="line"><span>designs clarity.</span></span>
+  </h1>
+  <div class="hero-foot">
+    <!-- EDIT: your one-line positioning -->
+    <div class="hero-foot-left">
+      <p><strong>Product &amp; UX designer</strong> turning complex, high-stakes flows into interfaces people understand on the first try. 4+ years across conversational AI, e-commerce, and automation, in English and Arabic.</p>
+      <a href="#work" class="btn-primary">View work →</a>
+    </div>
+    <div class="scroll-cue">Scroll<span class="arrow"></span></div>
+  </div>
+</header>
+
+<!-- ===================== MARQUEE ===================== -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Product Design</span><span>Design Systems</span><span>User Research</span><span>Prototyping</span><span>Interaction Design</span><span>Strategy</span>
+    <span aria-hidden="true">Product Design</span><span aria-hidden="true">Design Systems</span><span aria-hidden="true">User Research</span><span aria-hidden="true">Prototyping</span><span aria-hidden="true">Interaction Design</span><span aria-hidden="true">Strategy</span>
+  </div>
+</div>
+
+<!-- ===================== WORK ===================== -->
+<section class="section-pad wrap" id="work">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">Selected Work</span>
+      <h2 style="margin-top:18px">Case studies, not screenshots.</h2>
+    </div>
+    <span class="count" id="projCount">01 / Project</span>
+  </div>
+
+  <div class="work-list">
+
+    <!-- ===== FEATURED: Shopify WhatsApp Automation (real case study) ===== -->
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="assets/whatsapp-settings-thumb.jpg" alt="WhatsApp order notifications settings, English and Arabic previews" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">01</span>
+      </div>
+      <div class="case-body">
+        <div class="field">Shopify Connector · Solo Product Designer</div>
+        <h3>WhatsApp automation that turns itself on</h3>
+        <p class="problem"><strong>The problem:</strong> small merchants lost sales when key order moments went silent. I designed a connector that messages customers on WhatsApp automatically, in English or Arabic, with zero setup.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">&ge;70%</div><div class="l">Activation target</div></div>
+          <div class="metric"><div class="n">+15%</div><div class="l">Recovery target</div></div>
+          <div class="metric"><div class="n">&ge;85%</div><div class="l">Open-rate target</div></div>
+        </div>
+        <a href="shopify-whatsapp-automation.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">Research</span><span class="chip">User Flows</span><span class="chip">UI Design</span><span class="chip">Bilingual (EN/AR)</span></div>
+      </div>
+    </article>
+
+    <!-- ===== Channel Setup Redesign (real case study) ===== -->
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="assets/channel-setup-thumb.jpg" alt="Redesigned channels overview with a guided WhatsApp setup" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">02</span>
+      </div>
+      <div class="case-body">
+        <div class="field">B2B SaaS Platform · Solo Product Designer</div>
+        <h3>Channel setup that guides itself</h3>
+        <p class="problem"><strong>The problem:</strong> channels were buried in a side menu and connecting WhatsApp meant a wall of requirements with no clear steps. I rebuilt it into one channels overview and a guided three-step setup that shows progress, tests before going live, and recovers cleanly when a connection fails.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">&ge;70%</div><div class="l">Completion target</div></div>
+          <div class="metric"><div class="n">&lt;5 min</div><div class="l">Time to connect</div></div>
+          <div class="metric"><div class="n">&ge;60%</div><div class="l">Error recovery</div></div>
+        </div>
+        <a href="channel-setup-redesign.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">Heuristic Audit</span><span class="chip">User Flows</span><span class="chip">UI Design</span></div>
+      </div>
+    </article>
+
+    <!-- ===== WhatsApp Channel Redesign (real case study) ===== -->
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="assets/whatsapp-channel-thumb.jpg" alt="Redesigned WhatsApp channel, Overview tab, shown in a browser window" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">03</span>
+      </div>
+      <div class="case-body">
+        <div class="field">B2B SaaS Platform · Solo Product Designer</div>
+        <h3>A settings page that became a channel</h3>
+        <p class="problem"><strong>The problem:</strong> once WhatsApp was connected, every control lived on one crowded page with a vague title, no sense of whether the channel was healthy, and a Disconnect that asked for no confirmation. I rebuilt it into a four-tab channel, made what's editable and what's risky obvious, and added the two capabilities it was missing: message templates and voice calls.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">&ge;90%</div><div class="l">Task success</div></div>
+          <div class="metric"><div class="n">&lt;30s</div><div class="l">Time to action</div></div>
+          <div class="metric"><div class="n">&le;1%</div><div class="l">Accidental disconnect</div></div>
+        </div>
+        <a href="whatsapp-channel-redesign.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">Heuristic Audit</span><span class="chip">Information Architecture</span><span class="chip">UI Design</span></div>
+      </div>
+    </article>
+
+    <!-- ===== AI Avatar Setup Experience (real case study) ===== -->
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="assets/ai-avatar-thumb.jpg" alt="AI Avatar setup wizard with image upload and a real-time preview" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">04</span>
+      </div>
+      <div class="case-body">
+        <div class="field">B2B SaaS Platform · Solo Product Designer</div>
+        <h3>AI avatar setup that checks itself</h3>
+        <p class="problem"><strong>The problem:</strong> connecting an AI avatar meant juggling an image spec, domain whitelisting, and a script embed, with no way to tell if it would work until the end. I designed a guided four-step wizard with real-time validation and a live preview, so users see it works before going live.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">&ge;80%</div><div class="l">Completion target</div></div>
+          <div class="metric"><div class="n">&le;2%</div><div class="l">Broken-avatar rate</div></div>
+          <div class="metric"><div class="n">&lt;5 min</div><div class="l">Time to connect</div></div>
+        </div>
+        <a href="ai-avatar-setup-experience.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">AI Feature</span><span class="chip">Validation</span><span class="chip">UI Design</span></div>
+      </div>
+    </article>
+
+    <!-- ===== SLA Analytics Dashboard (real case study) ===== -->
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="assets/sla-dashboard-thumb.jpg" alt="SLA Analytics Dashboard with KPI cards and a weekly performance trend chart" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">05</span>
+      </div>
+      <div class="case-body">
+        <div class="field">B2B SaaS Platform · Solo Product Designer</div>
+        <h3>SLA data that reads at a glance</h3>
+        <p class="problem"><strong>The problem:</strong> support leaders pieced SLA health together from exports and spreadsheets, so breaches surfaced late. I designed an analytics dashboard that surfaces compliance, response times, and weekly trends in one glanceable view, with filters and export built in.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">30%</div><div class="l">Faster issue spotting</div></div>
+          <div class="metric"><div class="n">&ge;80%</div><div class="l">Weekly active target</div></div>
+          <div class="metric"><div class="n">&lt;10s</div><div class="l">KPI read target</div></div>
+        </div>
+        <a href="sla-analytics-dashboard.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">Data Viz</span><span class="chip">Dashboard</span><span class="chip">UI Design</span></div>
+      </div>
+    </article>
+
+    <!-- =========================================================
+         DUPLICATE ME to add a project. Copy this <article> block,
+         paste it below, then edit the image, text and link.
+         - Layout (image left/right) alternates automatically.
+         - The number (01, 02...) is set automatically, leave it.
+         - The "NN / Projects" count updates automatically.
+         Visual: either an <img> like the card above, or a gradient
+         block <div class="mock m2"></div> with a <div class="mock-ui">
+         ...</div> inside. Classes m1..m4 exist.
+
+    <article class="case reveal is-clickable">
+      <div class="case-visual">
+        <img class="mock" src="THUMBNAIL_DATA_OR_URL" alt="Project name" style="width:100%;height:100%;object-fit:cover" loading="lazy">
+        <span class="tag-num">00</span>
+      </div>
+      <div class="case-body">
+        <div class="field">Field / Sector · Your Role</div>
+        <h3>Project headline goes here</h3>
+        <p class="problem"><strong>The problem:</strong> one or two sentences on what was broken and what you did.</p>
+        <div class="metrics">
+          <div class="metric"><div class="n">00%</div><div class="l">Label</div></div>
+          <div class="metric"><div class="n">00%</div><div class="l">Label</div></div>
+        </div>
+        <a href="your-project.html" class="case-link">Read the case study →</a>
+        <div class="chips"><span class="chip">Tag</span><span class="chip">Tag</span></div>
+      </div>
+    </article>
+    ========================================================= -->
+
+      </div>
+</section>
+
+<!-- ===================== CLIENTS ===================== -->
+<div class="clients reveal">
+  <div class="wrap clients-row" style="justify-content:center;gap:18px 46px">
+    <span class="c" style="opacity:1;color:var(--ink)">WideBot</span>
+    <span class="c">Freelance · MENA startups</span>
+  </div>
+</div>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="section-pad wrap" id="about">
+  <div class="about">
+    <div class="about-text reveal">
+      <span class="eyebrow" style="margin-bottom:24px">About</span>
+      <!-- EDIT: your story -->
+      <h2>I believe good design is <em>invisible</em> until the moment it saves someone's day.</h2>
+      <p>I'm Omar, a product designer based in Cairo, Egypt. I spend my time in the messy middle of products: the automation nobody finished, the dashboard nobody trusted, the onboarding everyone skipped.</p>
+      <p>My approach is research-led and systems-minded. I prototype early, test with real users, and ship with engineers in the room. I care about the details that don't get screenshots: empty states, error copy, loading moments, and the bilingual edge case in English and Arabic.</p>
+      <div class="facts">
+        <div class="fact"><div class="n">4+</div><div class="l">Years designing</div></div>
+        <div class="fact"><div class="n">20+</div><div class="l">Products shipped</div></div>
+        <div class="fact"><div class="n">2</div><div class="l">Languages · EN &amp; AR</div></div>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <img src="assets/omar-portrait.jpg" alt="Omar Altohame, product and UX designer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROCESS ===================== -->
+<section class="section-pad wrap" id="process" style="background:var(--paper-2)">
+  <div class="section-head reveal">
+    <div>
+      <span class="eyebrow">How I Work</span>
+      <h2 style="margin-top:18px">A process, not a guess.</h2>
+    </div>
+  </div>
+  <div class="process-grid">
+    <div class="step reveal"><span class="no">01</span><h3>Discover</h3><p>Interviews, analytics, and support logs. I find the real problem before sketching a single screen.</p></div>
+    <div class="step reveal"><span class="no">02</span><h3>Define</h3><p>Synthesis into clear problem statements, journey maps, and the one metric that matters most.</p></div>
+    <div class="step reveal"><span class="no">03</span><h3>Design</h3><p>Rapid prototypes tested with real users. I iterate in the open, never in a vacuum.</p></div>
+    <div class="step reveal"><span class="no">04</span><h3>Deliver</h3><p>Production-ready specs, a living design system, and measurement so we know it actually worked.</p></div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact wrap" id="contact">
+  <div class="reveal">
+    <span class="eyebrow">Let's work together</span>
+    <!-- EDIT: your email -->
+    <h2>Have a problem worth<br>solving? <a href="mailto:omarraltohame@gmail.com">Say hello</a>.</h2>
+    <div class="socials">
+      <!-- EDIT: your links -->
+      <a href="https://www.behance.net/omaraltohame">Behance</a>
+      <a href="https://www.linkedin.com/in/omarraltohame/">LinkedIn</a>
+      <a href="Omar-Altohame-CV.pdf" download>Download CV</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Omar Altohame — Designed &amp; built with intent.</span>
+    <a href="#top" class="to-top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+/* ---------- load reveal ---------- */
+window.addEventListener('load',()=>document.body.classList.add('loaded'));
+
+/* ---------- theme ---------- */
+const root=document.documentElement;
+const themeToggle=document.getElementById('themeToggle');
+function applyTheme(t){
+  root.setAttribute('data-theme',t);
+  themeToggle.setAttribute('aria-pressed',t==='dark');
+}
+/* saved choice wins, else follow OS preference */
+const saved=localStorage.getItem('theme');
+const prefersDark=matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(saved || (prefersDark?'dark':'light'));
+themeToggle.addEventListener('click',()=>{
+  const next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+  applyTheme(next);
+  localStorage.setItem('theme',next);
+});
+
+/* ---------- nav scrolled ---------- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+/* ---------- mobile menu ---------- */
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+function closeMenu(){
+  navLinks.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded','false');
+  menuBtn.setAttribute('aria-label','Open menu');
+  menuBtn.textContent='Menu';
+}
+menuBtn.addEventListener('click',()=>{
+  const open=navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',open);
+  menuBtn.setAttribute('aria-label',open?'Close menu':'Open menu');
+  menuBtn.textContent=open?'Close':'Menu';
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+
+/* ---------- auto-number cards + project count ---------- */
+const cards=document.querySelectorAll('.work-list article.case');
+cards.forEach((c,i)=>{const t=c.querySelector('.tag-num');if(t)t.textContent=String(i+1).padStart(2,'0');});
+const cEl=document.getElementById('projCount');
+if(cEl)cEl.textContent=String(cards.length).padStart(2,'0')+' / '+(cards.length===1?'Project':'Projects');
+
+/* ---------- scrollspy active nav ---------- */
+const navA=[...document.querySelectorAll('.nav-links a')];
+const targets=navA.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const spy=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id='#'+e.target.id;navA.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));}});},{rootMargin:'-45% 0px -50% 0px'});
+targets.forEach(t=>spy.observe(t));
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:0,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

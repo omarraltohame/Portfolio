@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SLA Analytics Dashboard — Case Study — Omar Altohame</title>
+<meta name="description" content="An internal SLA analytics dashboard that surfaces compliance, response times, and weekly trends at a glance, with filters and export. Product design case study by Omar Altohame." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237c2b27'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='white' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+(function(){try{var s=localStorage.getItem('theme');var d=matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',s||(d?'dark':'light'));}catch(e){}})();
+</script>
+<style>
+:root{--paper:#f4efe6;--paper-2:#ece5d8;--ink:#1c1815;--ink-soft:#4a443c;--ink-faint:#463f31;--line:#d8cfbf;--accent:#7c2b27;--accent-deep:#5e201b;--card:#fbf8f2;--shadow:rgba(28,24,21,.12);--grain:.045;--nav-bg:rgba(244,239,230,.72);--ok:#1f8a70;--err:#b04a2f}
+[data-theme="dark"]{--paper:#16140f;--paper-2:#1f1c16;--ink:#f1ece2;--ink-soft:#c3bcae;--ink-faint:#cdc3ab;--line:#332e25;--accent:#c75646;--accent-deep:#d96f5f;--card:#1d1a14;--shadow:rgba(0,0,0,.5);--grain:.07;--nav-bg:rgba(22,20,15,.72);--ok:#3fae8e;--err:#e0795c}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .6s ease,color .6s ease}
+::selection{background:var(--accent);color:#fff}
+.skip-link{position:absolute;left:16px;top:-60px;z-index:10000;background:var(--accent);color:#fff;padding:10px 18px;border-radius:8px;font-weight:600;text-decoration:none;transition:top .25s ease}
+.skip-link:focus{top:16px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1!important;transform:none!important}}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.wrap{padding:0 22px}}
+.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;display:inline-flex;align-items:center;gap:.7em}
+.eyebrow::before{content:"";width:30px;height:1px;background:var(--accent)}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;backdrop-filter:blur(14px);background:var(--nav-bg);border-bottom:1px solid transparent;transition:border-color .4s}
+nav.scrolled{border-bottom-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1080px;margin:0 auto;padding:0 32px}
+.logo{font-family:'Fraunces';font-weight:600;font-size:1.2rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:22px}
+.back-link{text-decoration:none;color:var(--ink-soft);font-size:.92rem;font-weight:500;display:inline-flex;align-items:center;gap:.5em;transition:color .3s}
+.back-link:hover{color:var(--accent)}
+.theme-toggle{width:54px;height:28px;border-radius:20px;border:1px solid var(--line);background:var(--paper-2);position:relative;cursor:pointer;transition:background .4s}
+.theme-toggle::before{content:"";position:absolute;top:2.5px;left:2.5px;width:21px;height:21px;border-radius:50%;background:var(--accent);transition:transform .4s cubic-bezier(.7,0,.2,1)}
+[data-theme="dark"] .theme-toggle::before{transform:translateX(26px)}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.case-hero{padding:150px 0 70px}
+.case-hero h1{font-family:'Fraunces';font-weight:400;line-height:1.0;letter-spacing:-.02em;font-size:clamp(2.6rem,7vw,5.2rem);margin:26px 0 22px}
+.case-hero h1 em{font-style:italic;color:var(--accent)}
+.lede{font-size:1.22rem;color:var(--ink-soft);max-width:60ch}
+.lede strong{color:var(--ink);font-weight:600}
+.meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;border-top:1px solid var(--line);padding-top:28px}
+.meta .k{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:7px}
+.meta .v{font-size:1rem;color:var(--ink);font-weight:500}
+@media(max-width:680px){.meta-grid{grid-template-columns:1fr 1fr;gap:22px}}
+.browser{border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 80px -40px var(--shadow);background:var(--card)}
+.browser .chrome{height:38px;background:var(--paper-2);display:flex;align-items:center;gap:7px;padding:0 16px;border-bottom:1px solid var(--line)}
+.browser .chrome i{width:11px;height:11px;border-radius:50%;background:var(--line);display:block}
+.browser img{display:block;width:100%}
+.hero-shot{margin-top:54px}
+.sec{padding:62px 0;border-top:1px solid var(--line)}
+.sec h2{font-family:'Fraunces';font-weight:500;font-size:clamp(1.8rem,3.6vw,2.7rem);line-height:1.05;letter-spacing:-.02em;margin:16px 0 26px}
+.sec h2 em{font-style:italic;color:var(--accent)}
+.sec p{font-size:1.08rem;color:var(--ink-soft);max-width:64ch;margin-bottom:18px}
+.sec p strong{color:var(--ink);font-weight:600}
+.lead-list{list-style:none;max-width:64ch;margin:8px 0 4px}
+.lead-list li{position:relative;padding-left:30px;margin-bottom:16px;font-size:1.08rem;color:var(--ink-soft)}
+.lead-list li::before{content:"";position:absolute;left:0;top:11px;width:14px;height:2px;background:var(--accent)}
+.lead-list li strong{color:var(--ink);font-weight:600}
+.pull{font-family:'Fraunces';font-style:italic;font-size:clamp(1.4rem,3vw,2rem);line-height:1.25;color:var(--ink);max-width:24ch;margin:10px 0;border-left:3px solid var(--accent);padding-left:24px}
+.src-note{font-size:.84rem;color:var(--ink-faint);max-width:64ch;margin-top:6px;font-style:italic}
+.artboard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 22px;margin:26px 0 14px;box-shadow:0 30px 60px -40px var(--shadow);overflow-x:auto}
+[data-theme="dark"] .artboard{background:#15130e;--paper-2:#221e17;--card:#2c2820;--line:#4a4234}
+.artboard svg{display:block;width:100%;min-width:780px;height:auto}
+.cap{font-size:.92rem;color:var(--ink-faint);margin-top:14px;max-width:70ch}
+.cap b{color:var(--ink-soft);font-weight:600}
+.dec{display:grid;grid-template-columns:auto 1fr;gap:18px 22px;margin:26px 0;align-items:start}
+.dec .num{font-family:'Fraunces';font-weight:600;color:var(--accent);font-size:1.1rem;border:1px solid var(--line);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center}
+.dec h3{font-family:'Fraunces';font-weight:600;font-size:1.2rem;margin-bottom:6px;letter-spacing:-.01em}
+.dec p{margin-bottom:0;font-size:1.02rem}
+.shot{margin:30px 0}
+.shot .browser{margin-bottom:14px}
+.figure{border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 60px -40px var(--shadow);margin-bottom:14px}
+.figure img{display:block;width:100%}
+.metric-note{background:var(--paper-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:.96rem;color:var(--ink-soft);margin-bottom:22px;max-width:64ch}
+table.km{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+table.km th,table.km td{text-align:left;padding:16px 20px;border-bottom:1px solid var(--line);font-size:1rem}
+table.km th{background:var(--paper-2);font-family:'Hanken Grotesk';font-weight:700;color:var(--ink);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+table.km tr:last-child td{border-bottom:none}
+table.km td:first-child{font-weight:600;color:var(--ink)}
+table.km .tgt{font-family:'Fraunces';font-weight:600;color:var(--accent)}
+table.km td:last-child{color:var(--ink-faint)}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:560px){.tbl-scroll table{min-width:460px}}
+.tradeoff{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-top:24px;max-width:70ch}
+.tradeoff .k{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.tradeoff p{margin:0;color:var(--ink-soft)}
+footer{border-top:1px solid var(--line);padding:50px 0;margin-top:30px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--ink-faint);font-size:.9rem}
+.foot-inner a{color:var(--ink-soft);text-decoration:none;font-weight:500;border-bottom:1.5px solid var(--accent);padding-bottom:2px}
+.foot-inner a:hover{color:var(--accent)}
+.nav-left{display:flex;align-items:center;gap:24px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.scroll-hint{display:none;font-size:.82rem;color:var(--ink-faint);margin:0 0 8px}
+@media(max-width:760px){.scroll-hint{display:block}}
+.zoomable{cursor:zoom-in}
+.end-cta{text-align:center;padding:74px 0 10px;border-top:1px solid var(--line)}
+.end-cta h2{font-family:'Fraunces';font-weight:500;font-size:clamp(1.8rem,3.6vw,2.6rem);margin:14px 0 30px;letter-spacing:-.02em}
+.end-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:.5em;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;padding:13px 24px;border-radius:30px;transition:gap .3s,background .3s}
+.btn-primary:hover{background:var(--accent-deep);gap:.9em}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5em;background:transparent;color:var(--ink);text-decoration:none;font-weight:600;padding:13px 24px;border-radius:30px;border:1px solid var(--line);transition:gap .3s,border-color .3s}
+.btn-ghost:hover{border-color:var(--accent);gap:.9em}
+#lightbox{position:fixed;inset:0;z-index:11000;background:rgba(15,12,9,.88);display:none;align-items:center;justify-content:center;padding:28px;cursor:zoom-out}
+#lightbox.open{display:flex}
+#lightbox img{max-width:96vw;max-height:92vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="index.html" class="logo">Omar<span>.</span></a>
+      <a href="index.html#work" class="back-link">← All work</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false"></button>
+  </div>
+</nav>
+
+<main id="main">
+<header class="case-hero wrap" id="top">
+  <span class="eyebrow reveal">Case Study · 2026</span>
+  <h1 class="reveal">SLA data that <em>reads at a glance</em>.</h1>
+  <p class="lede reveal">Support leaders were piecing SLA health together from exports and spreadsheets. I designed an analytics dashboard that surfaces the metrics that matter, compliance, response times, and weekly trends, in <strong>one glanceable view</strong>, with filters and export built in.</p>
+  <div class="meta-grid reveal">
+    <div class="meta"><div class="k">Role</div><div class="v">Solo Product Designer</div></div>
+    <div class="meta"><div class="k">Scope</div><div class="v">Research · Data Viz · UI</div></div>
+    <div class="meta"><div class="k">Type</div><div class="v">Product design</div></div>
+    <div class="meta"><div class="k">Platform</div><div class="v">B2B SaaS · web app</div></div>
+  </div>
+  <div class="hero-shot reveal">
+    <div class="browser"><div class="chrome"><i></i><i></i><i></i></div><img class="zoomable" src="assets/sla-dashboard.png" alt="SLA Analytics Dashboard: KPI cards for volume, response times, and compliance, with a weekly trend chart" loading="lazy"></div>
+  </div>
+</header>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">Overview</span>
+  <h2>Support managers were flying blind on SLA.</h2>
+  <p>WideBot's platform handled thousands of customer conversations, but the people responsible for service levels had no single place to see how they were doing. SLA health lived in raw exports and manual spreadsheets, so a breach trend often surfaced only after it had become a problem. As the solo product designer, working with a PM and engineers and interviewing support team leads, I designed an analytics dashboard to make SLA performance visible in real time.</p>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">The Problem</span>
+  <h2>What wasn't working</h2>
+  <ul class="lead-list">
+    <li><strong>No real-time view.</strong> Leaders couldn't see conversation volume, first-response and resolution times, or SLA compliance without pulling the data by hand.</li>
+    <li><strong>Trends hid in spreadsheets.</strong> Weekly patterns and emerging breaches were buried in exports, so problems were caught late.</li>
+    <li><strong>No way to slice or share.</strong> Filtering by team or date, or producing a clean report, meant manual work in Excel every time.</li>
+  </ul>
+  <p class="pull">By the time an SLA problem showed up, it had usually already cost them.</p>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">The Insight</span>
+  <h2>Managers didn't need more data. They needed it <em>at a glance</em>.</h2>
+  <p>Talking to support leads, the pattern was clear: they didn't want to dig, they wanted to glance, spot a dip, and act. So the design bet was glanceability over depth: lead with the few KPIs that matter, show the trend as one readable chart, and keep everything else a tab or a filter away.</p>
+  <p class="pull">Glanceable beats comprehensive.</p>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">Design Decisions</span>
+  <h2>Four decisions that made the data readable</h2>
+
+  <div class="dec">
+    <div class="num">1</div>
+    <div><h3>Lead with four KPIs, not forty</h3><p>The header is only the numbers a manager checks first: total conversations, average first response, average resolution, and SLA compliance. Everything secondary lives below or behind a tab, so the top of the page answers "are we okay?" instantly.</p></div>
+  </div>
+  <div class="dec">
+    <div class="num">2</div>
+    <div><h3>One trend chart, two lines</h3><p>Weekly SLA compliance and average first-response time share a single chart with a hover tooltip, so the relationship between speed and compliance is visible at a glance instead of split across two views.</p></div>
+  </div>
+  <div class="dec">
+    <div class="num">3</div>
+    <div><h3>Color as a system, not decoration</h3><p>Each metric keeps a consistent color, green for response time, purple for SLA, across the cards, the chart, and the tooltip. I considered a single accent palette, but distinct metric colors cut the effort of cross-referencing the numbers.</p></div>
+  </div>
+  <div class="dec">
+    <div class="num">4</div>
+    <div><h3>Tabs for depth, filters for focus</h3><p>A modular tab layout (Trends, Agent Performance, Breach Analysis, Time Distribution) keeps the page glanceable while making deeper cuts one click away, and team and date filters plus CSV export let leaders focus or share without opening a spreadsheet.</p></div>
+  </div>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">The Solution</span>
+  <h2>What the manager sees</h2>
+  <p>The dashboard answers the headline question first. Four KPIs across the top, total volume, average first response, average resolution, and SLA compliance, give the state of play at a glance, while the four tabs keep the deeper cuts one click away. The weekly trend chart carries SLA compliance and average response time on two lines, and a hover tooltip turns any week into exact numbers, so a dip becomes a specific, actionable figure. Team and date filters plus CSV export sit in reach, so a manager can focus or share without opening a spreadsheet.</p>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">Measuring Success</span>
+  <h2>How I'd judge the design</h2>
+  <div class="metric-note">These are the success <strong>targets I defined</strong> to evaluate the design. They are goals to measure against in production, not post-launch results.</div>
+  <div class="tbl-scroll"><table class="km">
+    <thead><tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td>Time to spot a weekly SLA issue</td><td class="tgt">30% faster</td><td>Speed of insight</td></tr>
+      <tr><td>Manual SLA reports pulled by leads</td><td class="tgt">&ge; 50% fewer</td><td>Efficiency</td></tr>
+      <tr><td>Weekly active use by support leads</td><td class="tgt">&ge; 80%</td><td>Adoption</td></tr>
+      <tr><td>Time to read the core KPIs</td><td class="tgt">under 10s</td><td>Glanceability</td></tr>
+      <tr><td>Dashboard satisfaction</td><td class="tgt">&ge; 4/5</td><td>Experience</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="sec wrap reveal">
+  <span class="eyebrow">Impact &amp; Reflection</span>
+  <h2>What I'd expect to change</h2>
+  <ul class="lead-list">
+    <li>Faster reaction to SLA dips, because trends are visible weekly instead of after the fact.</li>
+    <li>Less manual reporting, with filters and export replacing spreadsheet work.</li>
+    <li>A shared view of performance across the support team, from one source.</li>
+  </ul>
+  <p class="pull">SLA health went from a monthly export to a daily glance.</p>
+  <p style="margin-top:26px"><strong>If I did it again:</strong> I'd validate the four header KPIs with real managers to confirm they are the right four, test whether the two-line chart reads more clearly than two separate charts, build the Agent Performance and Breach Analysis tabs to the same standard, and instrument which views managers actually open so the layout earns its place.</p>
+  <div class="tradeoff">
+    <div class="k">Key tradeoff</div>
+    <p><strong>Glanceable vs. complete.</strong> Leading with four KPIs and one chart means deeper data sits behind tabs, so a power user clicks more. I accepted that because the daily job is a glance, not an audit, and the depth is still one tab away.</p>
+  </div>
+</section>
+
+<section class="end-cta wrap reveal">
+  <span class="eyebrow" style="justify-content:center">Thanks for reading</span>
+  <h2>Want to see more, or talk?</h2>
+  <div class="end-actions">
+    <a href="index.html#work" class="btn-ghost">← Back to all work</a>
+    <a href="index.html#contact" class="btn-primary">Get in touch →</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 Omar Altohame</span>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image"><img alt=""></div>
+
+<script>
+window.addEventListener('load',()=>document.body.classList.add('loaded'));
+const root=document.documentElement,tt=document.getElementById('themeToggle');
+function ap(t){root.setAttribute('data-theme',t);tt.setAttribute('aria-pressed',t==='dark');}
+ap(localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+tt.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='dark'?'light':'dark';ap(n);localStorage.setItem('theme',n);});
+const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
+document.querySelectorAll('.zoomable').forEach(im=>im.addEventListener('click',()=>{lbImg.src=im.currentSrc||im.src;lbImg.alt=im.alt;lb.classList.add('open');document.body.style.overflow='hidden';}));
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+lb.addEventListener('click',closeLb);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb();});
+</script>
+</body>
+</html>
