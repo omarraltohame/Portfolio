@@ -246,7 +246,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
     <tbody>
       <tr><td>Merchant activation rate</td><td class="tgt">&ge; 70%</td><td>Adoption</td></tr>
       <tr><td>Abandoned checkout recovery</td><td class="tgt">+15%</td><td>Sales</td></tr>
-      <tr><td>WhatsApp open rate</td><td class="tgt">&ge; 85%</td><td>Engagement</td></tr>
+      <tr><td>WhatsApp open rate</td><td class="tgt">&ge; 90%</td><td>Engagement</td></tr>
       <tr><td>Merchant satisfaction</td><td class="tgt">&ge; 4/5</td><td>Experience</td></tr>
       <tr><td>Manual message reduction</td><td class="tgt">&ge; 40%</td><td>Efficiency</td></tr>
     </tbody>
@@ -257,10 +257,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   <span class="eyebrow">Impact &amp; Reflection</span>
   <h2>What changed</h2>
   <ul class="lead-list">
-    <li>Faster onboarding and higher activation</li>
-    <li>Less friction during setup</li>
-    <li>Higher customer trust through instant updates</li>
-    <li>Reduced merchant workload</li>
+    <li>Messaging defaults to ON, so there is no setup screen for a merchant to abandon.</li>
+    <li>Language is a single tap, with a live preview of the exact message the customer receives.</li>
+    <li>Connecting Shopify is one guided three-step flow with a visible progress state.</li>
+    <li>Both connections fail with a plain error and an obvious retry, never a silent dead end.</li>
   </ul>
   <p class="pull">Automation stopped being a feature and became the default behavior.</p>
   <p style="margin-top:26px"><strong>If I did it again:</strong> defaulting a messaging feature to ON is a strong call. It drives adoption, but it raises consent and cost questions, since WhatsApp charges per conversation. I'd validate the default-on decision with real merchants first, add a clear first-run explanation and a one-tap pause, and instrument the funnel to confirm the activation and recovery targets actually hold in production.</p>
